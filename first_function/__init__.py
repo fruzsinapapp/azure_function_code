@@ -1010,12 +1010,21 @@ def main(request: func.HttpRequest):
 
     try:
         name = request.get_json()['name']
+        dot_1_x = request.get_json()['dot_1_x']
+        dot_1_y = request.get_json()['dot_1_y']
+        dot_2_x = request.get_json()['dot_2_x']
+        dot_2_y = request.get_json()['dot_2_y']
+        dot_3_x = request.get_json()['dot_3_x']
+        dot_3_y = request.get_json()['dot_3_y']
+        dot_4_x = request.get_json()['dot_4_x']
+        dot_4_y = request.get_json()['dot_4_y']
+
         #coord1 = request.get_json()['coord1']
         #coord2 = request.get_json()['coord2']
     except (ValueError, KeyError):
         return func.HttpResponse("Wrong json")
 
-    my_list = [0, 0, 0, 100, 100, 100, 100, 0]
+    my_list = [dot_1_x, dot_1_y, dot_2_x, dot_2_y, dot_3_x, dot_3_y, dot_4_x, dot_4_y]
     test1 = perform_experiments(my_list)
 
     return func.HttpResponse(f'Hello, {name}, {test1[0][0]}, {test1[0][1]} {test1[1][0]}, {test1[1][1]}')
