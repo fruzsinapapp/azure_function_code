@@ -940,7 +940,7 @@ def execute_algorithm_with_params(params):
         solution = algorithm(problem)
     coordinates = solution.get_coordinates()
     print(coordinates)
-    return solution, solution.value, value_evolution, times_dict
+    return solution, solution.value, value_evolution, times_dict, coordinates
 
 
 def execute_algorithm(algorithm, algorithm_name, problem, show_solution_plot=False, solution_plot_save_path=None,
@@ -954,13 +954,13 @@ def execute_algorithm(algorithm, algorithm_name, problem, show_solution_plot=Fal
     solutions, values, value_evolutions, times, time_divisions = list(), list(), list(), list(), list()
 
     for i in range(execution_num):
-        solution, value, value_evolution, time_division = execute_algorithm_with_params(param_tuples[i])
+        solution, value, value_evolution, time_division, coordinates = execute_algorithm_with_params(param_tuples[i])
         solutions.append(solution)
         values.append(value)
         value_evolutions.append(value_evolution)
         time_divisions.append(time_division)
 
-    return solutions, values, value_evolutions, times, time_divisions
+    return solutions, values, value_evolutions, times, time_divisions, coordinates
 
 def perform_experiments(dot_coordinates):
     """Perform a set of experiments for the problem with the passed index, and producing output in the specified directory (when applicable)"""
@@ -987,7 +987,7 @@ def perform_experiments(dot_coordinates):
                 experiment_dict[problem_name] = {"problem": problem, "manual_solution": solution, "algorithms": dict()}
 
                 for (algorithm_name, algorithm) in [("Greedy", solve_problem)]:
-                    solutions, values, value_evolutions, times, time_divisions = execute_algorithm(algorithm=algorithm,
+                    solutions, values, value_evolutions, times, time_divisions, coordinates_result = execute_algorithm(algorithm=algorithm,
                                                                                                    algorithm_name=algorithm_name,
                                                                                                    problem=problem,
                                                                                                    execution_num=execution_num,
@@ -1001,7 +1001,7 @@ def perform_experiments(dot_coordinates):
                                                                                    "time_divisions": time_divisions}
     else:
         print("The experiments cannot be performed (there are no problems available).")
-    return dot_coordinates[0]
+    return coordinates_result
 
 def main(request: func.HttpRequest):
     logging.info(f"Request method: {request.method}")
@@ -1010,12 +1010,12 @@ def main(request: func.HttpRequest):
 
     try:
         name = request.get_json()['name']
-        coord1 = request.get_json()['coord1']
-        coord2 = request.get_json()['coord2']
+        #coord1 = request.get_json()['coord1']
+        #coord2 = request.get_json()['coord2']
     except (ValueError, KeyError):
         return func.HttpResponse("Wrong json")
 
     my_list = [0, 0, 0, 100, 100, 100, 100, 0]
     test1 = perform_experiments(my_list)
 
-    return func.HttpResponse(f'Hello, {name}, {coord1}, {test1}')
+    return func.HttpResponse(f'Hello, {name}, {test1[0][0]}, {test1[0][1]} {test1[1][0]}, {test1[1][1]}')
