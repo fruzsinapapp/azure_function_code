@@ -9,7 +9,9 @@ def main(request: func.HttpRequest):
 
     try:
         name = request.get_json()['name']
+        coord1 = request.get_json()['coord1']
+        coord2 = request.get_json()['coord2']
     except (ValueError, KeyError):
         return func.HttpResponse("Wrong json")
 
-    return func.HttpResponse(f'Hello, {name}')
+    return func.HttpResponse(f'Hello, {name}, {coord1}, {coord2}')
