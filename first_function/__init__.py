@@ -1009,7 +1009,7 @@ def main(request: func.HttpRequest):
         return func.HttpResponse("Hello")
 
     try:
-        name = request.get_json()['name']
+        #name = request.get_json()['name']
         dot_1_x = request.get_json()['dot_1_x']
         dot_1_y = request.get_json()['dot_1_y']
         dot_2_x = request.get_json()['dot_2_x']
@@ -1027,4 +1027,4 @@ def main(request: func.HttpRequest):
     my_list = [dot_1_x, dot_1_y, dot_2_x, dot_2_y, dot_3_x, dot_3_y, dot_4_x, dot_4_y]
     test1 = perform_experiments(my_list)
 
-    return func.HttpResponse(f'Hello, {name}, {test1[0][0]}, {test1[0][1]} {test1[1][0]}, {test1[1][1]}')
+    return func.HttpResponse(f'{test1[0][0]} {test1[0][1]} {test1[1][0]} {test1[1][1]}')
