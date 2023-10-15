@@ -914,6 +914,38 @@ def create_problems(dot_coordinates):
              Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
              Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
              Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.),
+             Item(Polygon([(0., 0.), (40., 0.), (40., 80.), (0., 80.)]), 1., 1.)
              ]
 
     problem = Problem(container, items)
@@ -1003,28 +1035,37 @@ def perform_experiments(dot_coordinates):
         print("The experiments cannot be performed (there are no problems available).")
     return coordinates_result
 
+
 def main(request: func.HttpRequest):
     logging.info(f"Request method: {request.method}")
     if request.method == "GET":
         return func.HttpResponse("Hello")
 
     try:
-        #name = request.get_json()['name']
-        dot_1_x = request.get_json()['dot_1_x']
-        dot_1_y = request.get_json()['dot_1_y']
-        dot_2_x = request.get_json()['dot_2_x']
-        dot_2_y = request.get_json()['dot_2_y']
-        dot_3_x = request.get_json()['dot_3_x']
-        dot_3_y = request.get_json()['dot_3_y']
-        dot_4_x = request.get_json()['dot_4_x']
-        dot_4_y = request.get_json()['dot_4_y']
+        data = request.get_json()
+        """
+        
+        """
+        coordinates = []
 
-        #coord1 = request.get_json()['coord1']
-        #coord2 = request.get_json()['coord2']
+        for i in range(1, 1000):  # Set an upper limit for the number of coordinates
+            x_key = f'dot_{i}_x'
+            y_key = f'dot_{i}_y'
+
+            if x_key in data and y_key in data:
+                x = data[x_key]
+                y = data[y_key]
+                coordinates.append(x)
+                coordinates.append(y)
+            else:
+                break  # Stop processing when a coordinate is not found
+
+
     except (ValueError, KeyError):
         return func.HttpResponse("Wrong json")
 
-    my_list = [dot_1_x, dot_1_y, dot_2_x, dot_2_y, dot_3_x, dot_3_y, dot_4_x, dot_4_y]
-    test1 = perform_experiments(my_list)
+    test1 = perform_experiments(coordinates)
 
-    return func.HttpResponse(f'{test1[0][0]} {test1[0][1]} {test1[1][0]} {test1[1][1]}')
+    response_string = " ".join(map(str, test1))
+
+    return func.HttpResponse(response_string)
