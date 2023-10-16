@@ -1066,6 +1066,6 @@ def main(request: func.HttpRequest):
 
     test1 = perform_experiments(coordinates)
 
-    response_string = " ".join(map(str, test1))
+    response_string = " ".join(str(val) for val in test1)
 
     return func.HttpResponse(response_string)
